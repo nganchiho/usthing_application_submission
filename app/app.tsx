@@ -36,6 +36,8 @@ export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 // Web linking configuration
 const prefix = Linking.createURL("/")
 const config = {
+  // A deep link straight to a course still has the list underneath, so Back has somewhere to go.
+  initialRouteName: "CourseList" as const,
   screens: {
     CourseList: "",
     CourseDetail: "course/:code",

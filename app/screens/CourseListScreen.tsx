@@ -1,5 +1,5 @@
-import { useCallback, useDeferredValue, useEffect, useMemo, useState } from "react"
-import { FlatList, ScrollView, TextStyle, View, ViewStyle } from "react-native"
+import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from "react"
+import { FlatList, LayoutChangeEvent, ScrollView, TextStyle, View, ViewStyle } from "react-native"
 
 import { Button } from "@/components/Button"
 import { Chip } from "@/components/Chip"
@@ -19,6 +19,7 @@ const searchIndex = buildSearchIndex(courses)
 
 export function CourseListScreen({ navigation }: AppStackScreenProps<"CourseList">) {
   const { themed } = useAppTheme()
+  const termRowRef = useRef<ScrollView>(null)
   const [query, setQuery] = useState("")
   const [favouritesOnly, setFavouritesOnly] = useState(false)
   const [term, setTerm] = useSelectedTerm()
@@ -49,6 +50,15 @@ export function CourseListScreen({ navigation }: AppStackScreenProps<"CourseList
     [navigation],
   )
 
+  // A remembered term can sit past the edge of the chip row; scroll it into view so the
+  // active filter is always visible.
+  const revealSelectedTerm = useCallback((event: LayoutChangeEvent) => {
+    termRowRef.current?.scrollTo({
+      x: Math.max(0, event.nativeEvent.layout.x - 16),
+      animated: false,
+    })
+  }, [])
+
   const clearFilters = () => {
     setQuery("")
     setDepartment(undefined)
@@ -74,7 +84,7 @@ export function CourseListScreen({ navigation }: AppStackScreenProps<"CourseList
         <TextField
           value={query}
           onChangeText={setQuery}
-          placeholder="Search code or title, e.g. COMP 2011…"
+          placeholder="Search code or title…"
           autoCapitalize="none"
           autoCorrect={false}
           spellCheck={false}
@@ -84,6 +94,7 @@ export function CourseListScreen({ navigation }: AppStackScreenProps<"CourseList
         />
 
         <ScrollView
+          ref={termRowRef}
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={themed($chipRow)}
@@ -99,6 +110,7 @@ export function CourseListScreen({ navigation }: AppStackScreenProps<"CourseList
               label={t.name}
               selected={term === t.code}
               onPress={() => setTerm(t.code)}
+              onLayout={term === t.code ? revealSelectedTerm : undefined}
             />
           ))}
         </ScrollView>

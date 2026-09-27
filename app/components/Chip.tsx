@@ -1,4 +1,4 @@
-import { Pressable, TextStyle, ViewStyle } from "react-native"
+import { LayoutChangeEvent, Pressable, TextStyle, ViewStyle } from "react-native"
 
 import { useAppTheme } from "@/theme/context"
 import type { ThemedStyle } from "@/theme/types"
@@ -10,15 +10,23 @@ interface ChipProps {
   selected?: boolean
   onPress: () => void
   accessibilityLabel?: string
+  onLayout?: (event: LayoutChangeEvent) => void
 }
 
 /** A pill-shaped toggle used for filters and term selection. */
-export function Chip({ label, selected = false, onPress, accessibilityLabel }: ChipProps) {
+export function Chip({
+  label,
+  selected = false,
+  onPress,
+  accessibilityLabel,
+  onLayout,
+}: ChipProps) {
   const { themed } = useAppTheme()
 
   return (
     <Pressable
       onPress={onPress}
+      onLayout={onLayout}
       accessibilityRole="button"
       accessibilityState={{ selected }}
       accessibilityLabel={accessibilityLabel}

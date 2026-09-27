@@ -8,7 +8,7 @@ A React Native (Expo) app for browsing HKUST courses, their sections, and their 
 - **Course detail** with description, co-requisites/exclusions, Common Core attributes and sections per term (quota, enrolment, waitlist, availability, times, venues, instructors)
 - **Prerequisite explorer**: an expandable AND/OR tree that you can follow down the chain, with every course tappable
 - **Unlocks**: the reverse direction, listing which courses need this one
-- **Favourites** and the last-used filters persist across launches
+- **Favourites**, plus the last-used term and department, persist across launches
 
 ## Setup
 

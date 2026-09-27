@@ -15,7 +15,8 @@ export function FavouriteButton({ courseCode, isFavourite, onToggle }: Favourite
 
   return (
     <PressableIcon
-      icon="heart"
+      // Filled vs outline, so the state doesn't rely on colour alone.
+      icon={isFavourite ? "heartFilled" : "heart"}
       size={22}
       color={isFavourite ? theme.colors.tint : theme.colors.tintInactive}
       containerStyle={$hitArea}

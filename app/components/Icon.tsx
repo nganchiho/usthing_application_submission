@@ -116,6 +116,7 @@ export const iconRegistry = {
   caretRight: require("@assets/icons/caretRight.png"),
   check: require("@assets/icons/check.png"),
   heart: require("@assets/icons/heart.png"),
+  heartFilled: require("@assets/icons/heartFilled.png"),
   hidden: require("@assets/icons/hidden.png"),
   ladybug: require("@assets/icons/ladybug.png"),
   lock: require("@assets/icons/lock.png"),
